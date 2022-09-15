@@ -30,7 +30,7 @@ const AccountSelection = () => {
           }}
         >
           <div>
-            <img src={SME} alt="" className="h-13" />
+            <img src={SME} alt="" className="h-8" />
           </div>
           <div className="mb-4">
             <h4 className="font-semibold text-37 mb-2">SMEs</h4>
@@ -52,7 +52,7 @@ const AccountSelection = () => {
           }`}
         >
           <div>
-            <img src={Partner} alt="" className="h-13" />
+            <img src={Partner} alt="" className="h-8" />
           </div>
           <div className="mb-4">
             <h4 className="font-semibold text-37 mb-2">Partner</h4>
