@@ -1,12 +1,13 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 // import icons;
 import SME from "../assets/images/sme.svg";
 import Partner from "../assets/images/partner.svg";
 // import context;
 import { RegContext } from "../pages/Home";
+import { IContext } from "../interface";
 
-const AccountSelection = () => {
-  const { nextStep } = useContext(RegContext);
+const AccountSelection: React.FC = () => {
+  const { nextStep } = React.useContext(RegContext) as IContext;
 
   const [isSME, setIsSME] = useState(true);
 

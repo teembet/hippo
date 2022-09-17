@@ -1,17 +1,19 @@
-import React, { useContext, useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, ChangeEvent } from "react";
 // import context;
 import { RegContext } from "../pages/Home";
 // import icons;
 import ArrowLeft from "../assets/images/arrow-left.svg";
 import Warning from "../assets/images/warning-icon.svg";
+import { IContext } from "../interface";
 
 const Verification = () => {
-  const { nextStep, prevStep } = useContext(RegContext);
+  const { nextStep, prevStep } = React.useContext(RegContext) as IContext;
   const [timer, setTimer] = useState("01:30");
 
-  const TimeRef = useRef(null);
-  const getTimeRemaining = (e) => {
-    const total = Date.parse(e) - Date.parse(new Date());
+  const TimeRef = useRef<number | null>(null);
+  const getTimeRemaining = (value: React.FormEvent) => {
+    const total =
+      Date.parse(value.toString()) - Date.parse(new Date().toString());
     const seconds = Math.floor((total / 1000) % 60);
     const minutes = Math.floor((total / 1000 / 60) % 60);
     const hours = Math.floor((total / 1000 / 60 / 60) % 24);
@@ -22,7 +24,9 @@ const Verification = () => {
       seconds,
     };
   };
-  const startTimer = (e) => {
+  const startTimer = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => {
     let { total, minutes, seconds } = getTimeRemaining(e);
     if (total >= 0) {
       // update the timer
@@ -37,7 +41,7 @@ const Verification = () => {
       );
     }
   };
-  const clearTimer = (e) => {
+  const clearTimer = (e: any) => {
     // If you adjust it you should also need to
     // adjust the Endtime formula we are about
     // to code next
@@ -47,13 +51,13 @@ const Verification = () => {
     // updating of timer Variable will be
     // after 1000ms or 1sec
     if (TimeRef.current) clearInterval(TimeRef.current);
-    const id = setInterval(() => {
+    const id = window.setInterval(() => {
       startTimer(e);
     }, 1000);
     TimeRef.current = id;
   };
 
-  const getDeadTime = () => {
+  const getDeadLine = () => {
     let deadline = new Date();
 
     // This is where you need to adjust if
@@ -63,7 +67,7 @@ const Verification = () => {
   };
 
   useEffect(() => {
-    clearTimer(getDeadTime());
+    clearTimer(getDeadLine());
     /* eslint-disable */
   }, []);
 
@@ -75,22 +79,24 @@ const Verification = () => {
   //     clearTimer(getDeadTime());
   //   };
 
-  const ref1 = useRef();
-  const ref2 = useRef();
-  const ref3 = useRef();
-  const ref4 = useRef();
-  const ref5 = useRef();
-  const ref6 = useRef();
+  const ref1 = useRef<HTMLInputElement | null>(null);
+  const ref2 = useRef<HTMLInputElement | null>(null);
+  const ref3 = useRef<HTMLInputElement | null>(null);
+  const ref4 = useRef<HTMLInputElement | null>(null);
+  const ref5 = useRef<HTMLInputElement | null>(null);
+  const ref6 = useRef<HTMLInputElement | null>(null);
   const [otp, setOtp] = useState("");
 
-  const handleChange = (ref, val) => {
+  const handleChange = (ref: any, e: any) => {
+    console.log(e, "e");
+    let val = e.target.value;
     if (val === "") {
-      ref1.current.value = "";
-      ref2.current.value = "";
-      ref3.current.value = "";
-      ref4.current.value = "";
-      ref5.current.value = "";
-      ref6.current.value = "";
+      ref1.current = null;
+      ref2.current = null;
+      ref3.current = null;
+      ref4.current = null;
+      ref5.current = null;
+      ref6.current = null;
       setOtp("");
     } else {
       setOtp(`${otp}${val}`);
@@ -135,35 +141,35 @@ const Verification = () => {
                 placeholder="*"
                 className="h-12 rounded-lg bg-grey col-span-1 placeholder:text-center focus:outline-blue text-center"
                 ref={ref1}
-                onKeyUp={(e) => handleChange(ref2, e.target.value)}
+                onKeyUp={(e) => handleChange(ref2, e)}
               />
               <input
                 type="number"
                 placeholder="*"
                 className="h-12 rounded-lg bg-grey col-span-1 placeholder:text-center focus:outline-blue text-center"
                 ref={ref2}
-                onKeyUp={(e) => handleChange(ref3, e.target.value)}
+                onKeyUp={(e) => handleChange(ref3, e)}
               />
               <input
                 type="number"
                 placeholder="*"
                 className="h-12 rounded-lg bg-grey col-span-1 placeholder:text-center focus:outline-blue text-center"
                 ref={ref3}
-                onKeyUp={(e) => handleChange(ref4, e.target.value)}
+                onKeyUp={(e) => handleChange(ref4, e)}
               />
               <input
                 type="number"
                 placeholder="*"
                 className="h-12 rounded-lg bg-grey col-span-1 placeholder:text-center focus:outline-blue text-center"
                 ref={ref4}
-                onKeyUp={(e) => handleChange(ref5, e.target.value)}
+                onKeyUp={(e) => handleChange(ref5, e)}
               />
               <input
                 type="number"
                 placeholder="*"
                 className="h-12 rounded-lg bg-grey col-span-1 placeholder:text-center focus:outline-blue text-center"
                 ref={ref5}
-                onKeyUp={(e) => handleChange(ref6, e.target.value)}
+                onKeyUp={(e) => handleChange(ref6, e)}
               />
               <input
                 type="number"
@@ -171,7 +177,7 @@ const Verification = () => {
                 className="h-12 rounded-lg bg-grey col-span-1 placeholder:text-center focus:outline-blue text-center"
                 ref={ref6}
                 onKeyUp={(e) => {
-                  ref6.current.blur();
+                  ref6?.current?.blur();
                   // setOtp(`${otp}${e.target.value}`)
                   // handleSubmit(e.target.value)
                 }}

@@ -1,14 +1,15 @@
-import React, { useState, createContext } from "react";
+import React, { ChangeEvent, useState, createContext } from "react";
 import { Step1, Step2, Step3, Step4, ProgressBar } from "../components";
 import { ReactComponent as Payhippo } from "../assets/images/payhippo.svg";
-export const RegContext = createContext();
+import { IContext } from "../interface";
+export const RegContext = createContext<IContext | null>(null);
 
-const Home = () => {
+const Home: React.FC = () => {
   const [step, setStep] = useState(1);
   const [data, setData] = useState({
     some: "",
   });
-  const [phone, setPhone] = useState();
+  const [phone, setPhone] = useState("");
 
   const nextStep = () => {
     if (step >= 4) {
@@ -25,7 +26,10 @@ const Home = () => {
     }
   };
 
-  const onChange = (e) => {
+  const onChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => {
+    console.log(e, "name");
     setData((data) => ({
       ...data,
       [e.target.name]: e.target.value,

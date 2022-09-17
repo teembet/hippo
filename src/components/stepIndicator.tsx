@@ -1,13 +1,14 @@
-import React, { useContext } from "react";
+import React from "react";
 // icons Import
 import { ReactComponent as Check } from "../assets/images/checkIcon.svg";
 import { ReactComponent as CheckIcon } from "../assets/images/check-icon.svg";
 //Context Import
 import { RegContext } from "../pages/Home";
+import { IContext } from "../interface";
 
 const StepIndicator = () => {
   //use Context
-  const { step } = useContext(RegContext);
+  const { step } = React.useContext(RegContext) as IContext;
 
   return (
     <div>

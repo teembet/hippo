@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 // import context;
 import { RegContext } from "../pages/Home";
 // import icons;
@@ -8,9 +8,10 @@ import Store from "../assets/images/store-icon.svg";
 import Calendar from "../assets/images/calendar-icon.svg";
 // import datepicker;
 import DatePicker from "react-datepicker";
+import { IContext } from "../interface";
 
 const PersonalDetails = () => {
-  const { nextStep, prevStep } = useContext(RegContext);
+  const { nextStep, prevStep } = React.useContext(RegContext) as IContext;
 
   const goBack = () => {
     prevStep();
@@ -75,8 +76,9 @@ const PersonalDetails = () => {
                   dateFormat="dd-MM-yyyy"
                   placeholderText="mm/dd/yyyy"
                   // selected={value}
-                  // onChange={onChange}
+                  onChange={() => null}
                   closeOnScroll={false}
+                  name="dob"
                   // showMonthDropdown
                   showYearDropdown
                   dropdownMode="select"

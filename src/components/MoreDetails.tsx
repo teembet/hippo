@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 // import context
 import { RegContext } from "../pages/Home";
 // import icons;
@@ -6,9 +6,12 @@ import ArrowLeft from "../assets/images/arrow-left.svg";
 import Email from "../assets/images/email-icon.svg";
 // import PhoneInput from "react-phone-number-input";
 import PhoneInput from "react-phone-input-2";
+import { IContext } from "../interface/index.js";
 
 const MoreDetails = () => {
-  const { phone, setPhone, nextStep, prevStep } = useContext(RegContext);
+  const { phone, setPhone, nextStep, prevStep } = React.useContext(
+    RegContext
+  ) as IContext;
 
   const goBack = () => {
     prevStep();
@@ -61,13 +64,10 @@ const MoreDetails = () => {
                   className="text-md xl:text-lg text-dark bg-transparent  w-full placeholder:text-muted focus:outline-none "
                 /> */}
                 <PhoneInput
-                  international
-                  defaultCountry="NG"
                   countryCodeEditable={false}
                   inputStyle={{ backgroundColor: "transparent", border: "0" }}
                   buttonStyle={{ border: "0" }}
                   dropdownStyle={{ backgroundColor: "#F2F2F2" }}
-                  name="phone"
                   value={phone}
                   onChange={setPhone}
                   country={"ng"}
