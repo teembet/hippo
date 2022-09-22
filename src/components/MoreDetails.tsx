@@ -9,7 +9,7 @@ import PhoneInput from "react-phone-input-2";
 import { IContext } from "../interface/index.js";
 
 const MoreDetails = () => {
-  const { phone, setPhone, nextStep, prevStep } = React.useContext(
+  const { phone, setPhone, nextStep, prevStep, onChange } = React.useContext(
     RegContext
   ) as IContext;
 
@@ -40,64 +40,70 @@ const MoreDetails = () => {
             </p>
           </div>
           <div className="w-full   lg:w-5/6   xl:w-4/6 mx-auto">
-            <div className="text-start mb-5">
-              <label className="text-darker text-base font-semibold ">
-                Email
-              </label>
-              <div className="flex items-center bg-grey py-3 mt-1">
-                <img src={Email} alt="user-icon" className="px-5  h-4" />
-                <input
-                  type="email"
-                  placeholder="Enter your Email"
-                  className="text-md xl:text-lg text-dark bg-transparent  w-full placeholder:text-muted focus:outline-none "
-                />
+            <form onSubmit={moveToNext}>
+              <div className="text-start mb-5">
+                <label className="text-darker text-base font-semibold ">
+                  Email
+                </label>
+                <div className="flex items-center bg-grey py-3 mt-1">
+                  <img src={Email} alt="user-icon" className="px-5  h-4" />
+                  <input
+                    type="email"
+                    placeholder="Enter your Email"
+                    className="text-md xl:text-lg text-dark bg-transparent  w-full placeholder:text-muted focus:outline-none "
+                    required
+                    onChange={onChange}
+                  />
+                </div>
               </div>
-            </div>
 
-            <div className="text-start mb-5">
-              <label className="text-darker text-base font-semibold ">
-                Phone Number
-              </label>
-              <div className="flex items-center bg-grey py-3 mt-1">
-                {/* <input
+              <div className="text-start mb-5">
+                <label className="text-darker text-base font-semibold ">
+                  Phone Number
+                </label>
+                <div className="flex items-center bg-grey py-3 mt-1">
+                  {/* <input
                   type="text"
                   className="text-md xl:text-lg text-dark bg-transparent  w-full placeholder:text-muted focus:outline-none "
                 /> */}
-                <PhoneInput
-                  countryCodeEditable={false}
-                  inputStyle={{ backgroundColor: "transparent", border: "0" }}
-                  buttonStyle={{ border: "0" }}
-                  dropdownStyle={{ backgroundColor: "#F2F2F2" }}
-                  value={phone}
-                  onChange={setPhone}
-                  country={"ng"}
-                />
+                  <PhoneInput
+                    countryCodeEditable={false}
+                    inputStyle={{ backgroundColor: "transparent", border: "0" }}
+                    buttonStyle={{ border: "0" }}
+                    dropdownStyle={{ backgroundColor: "#F2F2F2" }}
+                    value={phone}
+                    onChange={setPhone}
+                    country={"ng"}
+                  />
+                </div>
               </div>
-            </div>
-            <div className="text-start mb-5">
-              <label className="text-darker text-base font-semibold ">
-                Referral Code <span className="font-normal"> (Optional)</span>
-              </label>
-              <div className="flex items-center bg-grey py-3 mt-1">
-                <input
-                  type="text"
-                  className="text-md xl:text-lg text-dark bg-transparent  w-full placeholder:text-muted focus:outline-none "
-                />
+              <div className="text-start mb-5">
+                <label className="text-darker text-base font-semibold ">
+                  Referral Code <span className="font-normal"> (Optional)</span>
+                </label>
+                <div className="flex items-center bg-grey py-3 mt-1">
+                  <input
+                    type="text"
+                    className="text-md xl:text-lg text-dark bg-transparent  w-full placeholder:text-muted focus:outline-none "
+                    required
+                    onChange={onChange}
+                  />
+                </div>
               </div>
-            </div>
 
-            <button
-              className=" bg-blue text-white border-0 rounded-md w-full py-3 font-semibold"
-              onClick={moveToNext}
-            >
-              Continue
-            </button>
-            <button
-              className="lg:hidden bg-white text-blue border-2 border-blue rounded-md w-full mt-3 py-3 font-semibold"
-              onClick={goBack}
-            >
-              Back
-            </button>
+              <button
+                className=" bg-blue text-white border-0 rounded-md w-full py-3 font-semibold"
+                type="submit"
+              >
+                Continue
+              </button>
+              <button
+                className="lg:hidden bg-white text-blue border-2 border-blue rounded-md w-full mt-3 py-3 font-semibold"
+                onClick={goBack}
+              >
+                Back
+              </button>
+            </form>
           </div>
           <div className="mt-8">
             <p className="text-lg font-medium">

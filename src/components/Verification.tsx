@@ -5,69 +5,79 @@ import { RegContext } from "../pages/Home";
 import ArrowLeft from "../assets/images/arrow-left.svg";
 import Warning from "../assets/images/warning-icon.svg";
 import { IContext } from "../interface";
+import { clearTimer, getDeadTime } from "../utils";
 
 const Verification = () => {
   const { nextStep, prevStep } = React.useContext(RegContext) as IContext;
   const [timer, setTimer] = useState("01:30");
-
   const TimeRef = useRef<number | null>(null);
-  const getTimeRemaining = (value: React.FormEvent) => {
-    const total =
-      Date.parse(value.toString()) - Date.parse(new Date().toString());
-    const seconds = Math.floor((total / 1000) % 60);
-    const minutes = Math.floor((total / 1000 / 60) % 60);
-    const hours = Math.floor((total / 1000 / 60 / 60) % 24);
-    return {
-      total,
-      hours,
-      minutes,
-      seconds,
-    };
-  };
-  const startTimer = (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
-  ) => {
-    let { total, minutes, seconds } = getTimeRemaining(e);
-    if (total >= 0) {
-      // update the timer
-      // check if less than 10 then we need to
-      // add '0' at the beginning of the variable
-      setTimer(
-        // (hours > 9 ? hours : "0" + hours) +
-        //   ":" +
-        (minutes > 9 ? minutes : "0" + minutes) +
-          ":" +
-          (seconds > 9 ? seconds : "0" + seconds)
-      );
-    }
-  };
-  const clearTimer = (e: any) => {
-    // If you adjust it you should also need to
-    // adjust the Endtime formula we are about
-    // to code next
-    setTimer("01:30");
+  const ref1 = useRef<HTMLInputElement | null>(null);
+  const ref2 = useRef<HTMLInputElement | null>(null);
+  const ref3 = useRef<HTMLInputElement | null>(null);
+  const ref4 = useRef<HTMLInputElement | null>(null);
+  const ref5 = useRef<HTMLInputElement | null>(null);
+  const ref6 = useRef<HTMLInputElement | null>(null);
+  const [otp, setOtp] = useState("");
+  const [refArray] = useState([ref1, ref2, ref3, ref4, ref5, ref6]);
+  // const getTimeRemaining = (value: React.FormEvent) => {
+  //   const total =
+  //     Date.parse(value.toString()) - Date.parse(new Date().toString());
+  //   const seconds = Math.floor((total / 1000) % 60);
+  //   const minutes = Math.floor((total / 1000 / 60) % 60);
+  //   const hours = Math.floor((total / 1000 / 60 / 60) % 24);
+  //   return {
+  //     total,
+  //     hours,
+  //     minutes,
+  //     seconds,
+  //   };
+  // };
+  // const startTimer = (
+  //   e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  // ) => {
+  //   let { total, minutes, seconds } = getTimeRemaining(e);
+  //   if (total >= 0) {
+  //     // update the timer
+  //     // check if less than 10 then we need to
+  //     // add '0' at the beginning of the variable
+  //     setTimer(
+  //       // (hours > 9 ? hours : "0" + hours) +
+  //       //   ":" +
+  //       (minutes > 9 ? minutes : "0" + minutes) +
+  //         ":" +
+  //         (seconds > 9 ? seconds : "0" + seconds)
+  //     );
+  //   }
+  // };
+  // const clearTimer = (e: any) => {
+  //   // If you adjust it you should also need to
+  //   // adjust the Endtime formula we are about
+  //   // to code next
+  //   setTimer("01:30");
 
-    // If you try to remove this line the
-    // updating of timer Variable will be
-    // after 1000ms or 1sec
-    if (TimeRef.current) clearInterval(TimeRef.current);
-    const id = window.setInterval(() => {
-      startTimer(e);
-    }, 1000);
-    TimeRef.current = id;
-  };
+  //   // If you try to remove this line the
+  //   // updating of timer Variable will be
+  //   // after 1000ms or 1sec
+  //   if (TimeRef.current) clearInterval(TimeRef.current);
+  //   const id = window.setInterval(() => {
+  //     startTimer(e);
+  //   }, 1000);
+  //   TimeRef.current = id;
+  // };
 
-  const getDeadLine = () => {
-    let deadline = new Date();
+  // const getDeadLine = () => {
+  //   let deadline = new Date();
 
-    // This is where you need to adjust if
-    // you entend to add more time
-    deadline.setSeconds(deadline.getSeconds() + 90);
-    return deadline;
-  };
+  //   // This is where you need to adjust if
+  //   // you entend to add more time
+  //   deadline.setSeconds(deadline.getSeconds() + 90);
+  //   return deadline;
+  // };
 
   useEffect(() => {
-    clearTimer(getDeadLine());
+    clearTimer(getDeadTime());
+
+    refArray.map((x) => console.log(x, "x"));
     /* eslint-disable */
   }, []);
 
@@ -79,16 +89,9 @@ const Verification = () => {
   //     clearTimer(getDeadTime());
   //   };
 
-  const ref1 = useRef<HTMLInputElement | null>(null);
-  const ref2 = useRef<HTMLInputElement | null>(null);
-  const ref3 = useRef<HTMLInputElement | null>(null);
-  const ref4 = useRef<HTMLInputElement | null>(null);
-  const ref5 = useRef<HTMLInputElement | null>(null);
-  const ref6 = useRef<HTMLInputElement | null>(null);
-  const [otp, setOtp] = useState("");
-
-  const handleChange = (ref: any, e: any) => {
+  const handleChange = (ref, e) => {
     console.log(e, "e");
+    console.log(ref, "ref");
     let val = e.target.value;
     if (val === "") {
       ref1.current = null;
@@ -99,6 +102,7 @@ const Verification = () => {
       ref6.current = null;
       setOtp("");
     } else {
+      // console.log(`${otp}${val}`, "here");
       setOtp(`${otp}${val}`);
       ref.current.focus();
     }
@@ -136,7 +140,17 @@ const Verification = () => {
           </div>
           <div className="w-full   lg:w-5/6   xl:w-7/12 mx-auto">
             <div className=" grid grid-cols-6 gap-2 my-6">
-              <input
+              {refArray.map((r) => (
+                <input
+                  type="number"
+                  placeholder="*"
+                  className="h-12 rounded-lg bg-grey col-span-1 placeholder:text-center focus:outline-blue text-center"
+                  ref={r}
+                  onKeyUp={(e) => handleChange(r, e)}
+                  maxLength={1}
+                />
+              ))}
+              {/* <input
                 type="number"
                 placeholder="*"
                 className="h-12 rounded-lg bg-grey col-span-1 placeholder:text-center focus:outline-blue text-center"
@@ -181,7 +195,7 @@ const Verification = () => {
                   // setOtp(`${otp}${e.target.value}`)
                   // handleSubmit(e.target.value)
                 }}
-              />
+              /> */}
             </div>
           </div>
 

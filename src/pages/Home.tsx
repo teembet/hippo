@@ -10,7 +10,7 @@ const Home: React.FC = () => {
     some: "",
   });
   const [phone, setPhone] = useState("");
-
+  const [startDate, setStartDate] = useState(new Date());
   const nextStep = () => {
     if (step >= 4) {
       setStep(1);
@@ -32,13 +32,24 @@ const Home: React.FC = () => {
     console.log(e, "name");
     setData((data) => ({
       ...data,
+
       [e.target.name]: e.target.value,
     }));
   };
   return (
     <div>
       <RegContext.Provider
-        value={{ phone, setPhone, data, step, onChange, nextStep, prevStep }}
+        value={{
+          phone,
+          setPhone,
+          data,
+          step,
+          onChange,
+          nextStep,
+          prevStep,
+          startDate,
+          setStartDate,
+        }}
       >
         <div className="lg:px-5 lg:pt-6 min-h-[95vh] flex flex-col items-center justify-center text-white text-lg">
           <div className="bg-white  w-full  lg:w-10/12 lg:min-h-[80vh] m-auto p-6">
